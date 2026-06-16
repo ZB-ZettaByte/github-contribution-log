@@ -1,11 +1,11 @@
 # Contribution 1: Mobile image caption (alt text) not displayed on desktop/web clients
 
-**Contribution Number:** 1
-**Student:** Sai Rithwik Kukunuri
-**Issue:** Rocket.Chat Issue #40730
-**Fork:** https://github.com/ZB-ZettaByte/Rocket.Chat
-**Working Branch:** https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-**Status:** Phase II Complete
+- **Contribution Number:** 1
+- **Student:** Sai Rithwik Kukunuri
+- **Issue:** Rocket.Chat Issue #40730
+- **Fork:** https://github.com/ZB-ZettaByte/Rocket.Chat
+- **Working Branch:** https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
+- **Status:** Phase II Complete
 
 ---
 
