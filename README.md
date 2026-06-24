@@ -1,19 +1,19 @@
-# Contribution 1: Mobile image caption (alt text) not displayed on desktop/web clients
+# Contribution 1: Mobile image caption alt text not displayed on desktop and web clients
 
-- **Contribution Number:** 1
-- **Student:** Sai Rithwik Kukunuri
-- **Issue:** Rocket.Chat Issue #40730
-- **Fork:** https://github.com/ZB-ZettaByte/Rocket.Chat
-- **Working Branch:** https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-- **Status:** Phase II Complete
+* **Contribution Number:** 1
+* **Student:** Sai Rithwik Kukunuri
+* **Issue:** Rocket.Chat Issue #40730
+* **Fork:** https://github.com/ZB-ZettaByte/Rocket.Chat
+* **Working Branch:** https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
+* **Status:** Phase III Complete
 
 ---
 
 ## Why I Chose This Issue
 
-I chose this issue because it is a clear user-facing bug in Rocket.Chat’s desktop/web client. When users send an image with a caption from the mobile app, the caption should still be visible when the message is viewed from desktop or web. Fixing this would improve consistency across Rocket.Chat clients and make image messages easier to understand.
+I chose this issue because it is a clear user-facing bug in Rocket.Chat’s desktop and web client. When users send an image with a caption from the mobile app, the caption should still be visible when the message is viewed from desktop or web. Fixing this improves consistency across Rocket.Chat clients and makes image messages easier to understand.
 
-This issue also matches my skills and learning goals because Rocket.Chat is a large TypeScript-based open-source project, and the bug appears related to frontend message and image attachment rendering. I want to learn how a real production chat platform handles message attachments across mobile and web clients while practicing the full open-source contribution workflow.
+This issue also matches my skills and learning goals because Rocket.Chat is a large TypeScript-based open-source project, and the bug is related to frontend message and image attachment rendering. I wanted to learn how a production chat platform handles attachments across mobile and web clients while practicing the full open-source contribution workflow.
 
 ---
 
@@ -21,19 +21,19 @@ This issue also matches my skills and learning goals because Rocket.Chat is a la
 
 ### Problem Description
 
-When a user sends an image with a caption from the Rocket.Chat mobile app, the caption text is not displayed visibly in the desktop/web client. According to the issue, the caption appears to be stored in the image’s `alt` attribute, but it is not rendered as normal visible text near the image.
+When a user sends an image with a caption from the Rocket.Chat mobile app, the caption text is not visibly displayed in the desktop and web client. According to the issue and my reproduction, the caption appears to be available through the image attachment metadata or `alt` text, but the web client does not render that value as normal visible caption text.
 
 ### Expected Behavior
 
-The caption text should be visible on the desktop/web client when viewing an image that was sent with a caption from the mobile app. The caption should appear either above or below the image so users can read it clearly.
+The caption text should be visible in the desktop and web client when viewing an image that was sent with a caption from the mobile app. The caption should appear near the image in a readable way while still preserving the image `alt` text for accessibility.
 
 ### Current Behavior
 
-The image appears in the desktop/web client, but the caption text is missing from the visible message UI. The caption appears to exist only as image `alt` text instead of being displayed as readable message content.
+The image appears in the desktop and web client, but the caption text is missing from the visible message UI. The caption is only available indirectly through the image metadata or `alt` attribute instead of being shown as readable message content.
 
 ### Affected Components
 
-The affected area is likely Rocket.Chat’s web client message rendering flow, especially the components responsible for displaying image attachments or file attachments inside messages.
+The affected area is Rocket.Chat’s web client message rendering flow, especially the components responsible for displaying file and image attachments inside messages.
 
 ---
 
@@ -48,124 +48,35 @@ https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
 
 Setup notes:
 
-* I cloned my fork of Rocket.Chat.
-* I installed the required project dependencies based on the Rocket.Chat setup instructions.
-* I started the development server and verified that Rocket.Chat was accessible locally.
-* No major setup issues or blockers were encountered.
+* Cloned my fork of Rocket.Chat.
+* Installed the required project dependencies based on Rocket.Chat setup instructions.
+* Started the development server locally.
+* Verified that Rocket.Chat was accessible in the browser.
+* Created or used a test workspace to reproduce the issue.
 
 ### Steps to Reproduce
 
 1. Start the Rocket.Chat development server locally.
 2. Open Rocket.Chat in the browser.
 3. Create or log into a test user account.
-4. Open Rocket.Chat from a mobile client or mobile-like environment.
-5. Send an image with a caption, such as `Test caption from mobile`, into a test channel.
-6. Open the same channel from the desktop/web client.
-7. Observe the image message in the desktop/web client.
-8. Inspect the rendered image element using browser DevTools.
+4. Send an image with a caption from a mobile client or mobile-like environment.
+5. Open the same channel from the desktop and web client.
+6. Observe the image message in the desktop and web client.
+7. Inspect the rendered image element using browser DevTools.
 
 **Expected:**
-The caption text should be visible above or below the image in the desktop/web client.
+The caption text should be visible above or below the image in the desktop and web client.
 
-**Actual:**
-The image appears in the desktop/web client, but the caption text is not visibly rendered. The caption appears to be stored only in the image `alt` attribute instead of being displayed as normal message text.
-
-### Reproduction Evidence
-
-**Branch:**
-https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-
-**Findings:**
-
-* I was able to reproduce the issue locally.
-* The image sent with a caption from mobile appears in the desktop/web client.
-* The caption is not shown as visible text in the message UI.
-* The caption appears to be available through the image `alt` attribute, but the web client does not render it as a visible caption.
+**Actual before fix:**
+The image appeared in the desktop and web client, but the caption text was not visibly rendered. The caption appeared to exist only through image metadata or the image `alt` attribute.
 
 ---
 
 ## Solution Approach
 
-### Analysis
+The issue appeared to be in the desktop and web client’s attachment rendering logic. The mobile client sends the caption in a way that is preserved as image metadata or `alt` text, but the web client was not rendering that caption as visible UI text.
 
-Based on the reproduction, the issue appears to be in the desktop/web client’s image attachment rendering flow. The mobile client sends or stores the caption in a way that becomes available as the image `alt` text, but the desktop/web client does not display that value as visible caption text.
-
-The root cause is likely that the web client renders the image attachment itself but does not separately render the caption metadata when the caption comes from a mobile-created image message.
-
----
-
-## Implementation Plan
-
-Using the UMPIRE framework:
-
-### Understand
-
-The problem is that image captions sent from the mobile app are not visible in the desktop/web client. The caption appears to exist as image metadata or `alt` text, but it is not displayed as readable text near the image.
-
-### Match
-
-I will inspect Rocket.Chat’s existing message and attachment rendering components to find how image attachments are displayed. I will compare:
-
-* How mobile-created image messages store captions.
-* How desktop-created messages display normal message text.
-* How existing attachment metadata, file descriptions, and image attributes are rendered in the web client.
-
-### Plan
-
-1. Locate the web client component responsible for rendering image attachments inside messages.
-2. Identify where the image `alt` text or attachment metadata is passed into the rendered image component.
-3. Add logic to render the caption visibly when a mobile-created image attachment includes caption text.
-4. Make sure the caption is not duplicated for messages that already display text separately.
-5. Keep the UI change minimal and consistent with Rocket.Chat’s existing message styling.
-6. Add or update tests if there are existing tests for attachment or message rendering.
-7. Manually verify that image captions sent from mobile appear correctly in desktop/web.
-8. Confirm that images without captions still render normally.
-
-### Implement
-
-Implementation will begin in Phase III on the `fix-issue-40730` branch.
-
-### Review
-
-Before opening a pull request, I will review Rocket.Chat’s contribution guidelines, TypeScript conventions, formatting expectations, and existing PR requirements. I will also compare my changes against nearby message rendering code to keep the implementation consistent with the project’s style.
-
-### Evaluate
-
-I will verify the fix by repeating the reproduction steps:
-
-1. Send an image with a caption from mobile.
-2. Open the same message in desktop/web.
-3. Confirm the caption is visible near the image.
-4. Confirm the image still keeps the correct `alt` text for accessibility.
-5. Confirm images without captions still display normally.
-6. Run relevant existing tests or the project’s recommended test command if applicable.
-
----
-
-## Testing Strategy
-
-### Unit Tests
-
-Planned after identifying the affected component:
-
-* Test that image captions are rendered when present.
-* Test that images without captions still render normally.
-* Test that captions are not duplicated when message text is already displayed elsewhere.
-* Test that existing message attachment rendering behavior is not broken.
-
-### Integration Tests
-
-To be determined after reviewing Rocket.Chat’s existing test structure for message and attachment rendering.
-
-### Manual Testing
-
-Manual testing plan:
-
-1. Send an image with a caption from mobile.
-2. Open the same message in the web/desktop client.
-3. Confirm the caption is visible.
-4. Confirm images without captions still display correctly.
-5. Confirm normal text messages and desktop-created image messages are not affected.
+My approach was to make a minimal frontend change in the image attachment rendering path so that captions are displayed when available, while avoiding duplicate captions for messages that already display the same text elsewhere.
 
 ---
 
@@ -173,39 +84,119 @@ Manual testing plan:
 
 ### Phase I Progress
 
-I selected Rocket.Chat issue #40730, commented on the issue expressing interest, and forked the repository.
+I selected Rocket.Chat issue #40730, reviewed the problem, checked that it was a suitable open-source contribution, commented on the issue expressing interest, and forked the repository.
 
 ### Phase II Progress
 
-I set up the Rocket.Chat development environment, created a working branch, reproduced the missing-caption behavior, and wrote an implementation plan for the fix.
+I set up the Rocket.Chat development environment, created the `fix-issue-40730` branch, reproduced the missing-caption behavior locally, and identified the likely affected area as the web client’s image attachment rendering flow.
 
-### Code Changes
+### Phase III Implementation Progress
 
-No code changes yet. Code changes will begin in Phase III after this reproduction and planning phase.
+During Phase III, I worked on implementing the caption rendering fix on the `fix-issue-40730` branch.
 
-### Pull Request
+**What I changed:**
 
-**PR Link:** Not submitted yet.
-**PR Description:** To be written after implementation.
-**Maintainer Feedback:** No maintainer feedback yet.
+* Added logic for handling image attachment captions in the desktop and web rendering flow.
+* Made the caption visible near the image instead of leaving it only as image metadata or `alt` text.
+* Preserved the image `alt` text for accessibility.
+* Kept the change focused on image attachment rendering.
+* Checked that images without captions still render normally.
+* Checked that non-image messages are not affected by the change.
+
+**Branch link:**
+https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
 
 ---
 
-## Learnings & Reflections
+## Code Changes
+
+### Development Branch
+
+https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
+
+### Pull Request
+
+**PR Status:** Not submitted yet
+**Maintainer Feedback:** No maintainer feedback yet
+
+---
+
+## Testing Strategy
+
+### Automated Testing
+
+I reviewed Rocket.Chat’s existing testing patterns around frontend rendering and attachment-related behavior. I focused on making sure the fix targets the image attachment caption rendering path and does not introduce unrelated UI changes.
+
+### Manual Testing
+
+I manually validated the fix by repeating the original reproduction steps.
+
+Manual validation steps:
+
+1. Started Rocket.Chat locally.
+2. Sent an image with a caption from a mobile client or mobile-like environment.
+3. Opened the same channel from the desktop and web client.
+4. Confirmed that the image displayed correctly.
+5. Confirmed that the caption was visible near the image.
+6. Confirmed that the image still preserved the correct `alt` text.
+7. Confirmed that images without captions still displayed normally.
+8. Confirmed that regular text messages and non-image attachments were not affected.
+
+**Manual testing result:**
+The mobile-created image caption is now visible in the desktop and web client, and existing image attachment behavior still works as expected.
+
+---
+
+## Challenges Faced
+
+One challenge was identifying where the caption was stored versus where it was actually rendered. The caption appeared to be present through the image attachment metadata or `alt` text, but it was not being displayed as visible UI text.
+
+To solve this, I traced the image attachment rendering flow and compared how Rocket.Chat handles image attachment fields, message text, and accessibility attributes. I also checked nearby attachment rendering code to keep the fix consistent with the project’s existing frontend patterns.
+
+Another challenge was avoiding duplicate caption rendering. Since some messages may already display text separately from the attachment, I kept the change scoped so the caption is only rendered when it is needed and not already shown elsewhere.
+
+---
+
+## Engineering Judgment and Edge Cases Considered
+
+I considered the following edge cases while working on the fix:
+
+* Image attachments with no caption should not show an empty caption area.
+* Image attachments with captions should still preserve the `alt` attribute for accessibility.
+* Caption text should not be duplicated if it already appears in the normal message body.
+* Long captions should render using existing Rocket.Chat message styling instead of custom unrelated styling.
+* Non-image attachments should not be affected by this change.
+* Existing desktop-created image messages should continue to render normally.
+
+---
+
+## Process and Communication
+
+### Scrum and Slack Participation
+
+I participated in Phase III communication by posting progress updates and checking for support when needed.
+
+### Check-In Form
+
+I submitted the Phase III check-in form and marked:
+
+**Phase III Complete**
+
+---
+
+## Learnings and Reflections
 
 ### Technical Skills Gained
 
-So far, I learned how to evaluate open-source issues, check whether an issue is unassigned, inspect whether there are linked branches or pull requests, fork a large production repository, create a working branch, and reproduce a frontend bug locally.
+During Phase III, I gained more experience working inside a large TypeScript open-source codebase. I practiced tracing frontend rendering logic, making a scoped UI fix, and validating that the fix did not affect unrelated message types.
 
-### Challenges Overcome
+### Open Source Workflow Skills Gained
 
-The main challenge in Phase I was choosing a suitable issue from many open-source repositories. I compared several projects and selected Rocket.Chat because it is an active TypeScript-based open-source project with a clear user-facing bug.
-
-For Phase II, I focused on setting up the project, reproducing the behavior, and narrowing the likely affected area to the web client’s image attachment rendering flow.
+I practiced working from a fork, committing incrementally on a feature branch, keeping commits focused, documenting progress in a contribution README, and preparing the change for a pull request.
 
 ### What I'd Do Differently Next Time
 
-Next time, I would start by filtering for small bugs with clear reproduction steps, no assignee, and no linked pull requests earlier in the issue selection process. I would also check the setup instructions and development workflow earlier to estimate setup difficulty before choosing the issue.
+Next time, I would identify the exact test file earlier in the process before starting implementation. That would make it easier to develop the fix and test case together instead of treating testing as a separate step.
 
 ---
 
@@ -214,4 +205,7 @@ Next time, I would start by filtering for small bugs with clear reproduction ste
 * Rocket.Chat GitHub repository
 * Rocket.Chat Issue #40730
 * Rocket.Chat setup documentation
+* Existing Rocket.Chat message and attachment rendering code
 * GitHub branch and fork workflow
+* CodePath Phase III Build instructions
+
