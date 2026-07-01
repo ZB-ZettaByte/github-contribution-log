@@ -103,9 +103,6 @@ During Phase III, I worked on implementing the caption rendering fix on the `fix
 * Checked that images without captions still render normally.
 * Checked that non-image messages are not affected by the change.
 
-**Branch link:**
-https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-
 ### Phase IV Submission Progress
 
 During Phase IV, I prepared the contribution for formal pull request submission.
@@ -121,12 +118,6 @@ During Phase IV, I prepared the contribution for formal pull request submission.
 * Submitted the Phase IV check-in form and marked **Phase IV Complete**.
 
 ---
-
-## Code Changes
-
-### Development Branch
-
-https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
 
 ### Pull Request
 
