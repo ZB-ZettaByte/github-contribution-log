@@ -5,7 +5,7 @@
 * **Issue:** Rocket.Chat Issue #40730
 * **Fork:** https://github.com/ZB-ZettaByte/Rocket.Chat
 * **Working Branch:** https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-* **Status:** Phase III Complete
+* **Status:** Phase IV Complete — PR submitted and awaiting review
 
 ---
 
@@ -106,6 +106,20 @@ During Phase III, I worked on implementing the caption rendering fix on the `fix
 **Branch link:**
 https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
 
+### Phase IV Submission Progress
+
+During Phase IV, I prepared the contribution for formal pull request submission.
+
+**What I completed:**
+
+* Submitted the pull request against the upstream Rocket.Chat repository.
+* Referenced the related issue using `Closes #40730`.
+* Wrote a PR description that explains why the fix is needed before describing what changed.
+* Included an acceptance criteria checklist in the PR description.
+* Documented the current PR status in this README.
+* Added a maintainer feedback log.
+* Submitted the Phase IV check-in form and marked **Phase IV Complete**.
+
 ---
 
 ## Code Changes
@@ -116,8 +130,46 @@ https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
 
 ### Pull Request
 
-**PR Status:** Not submitted yet
-**Maintainer Feedback:** No maintainer feedback yet
+**PR Status:** Open and awaiting review
+
+**Related Issue:** Rocket.Chat Issue #40730
+
+**Issue Reference in PR:** Closes #40730
+
+**PR Summary:**
+This pull request fixes a user-facing caption rendering issue in Rocket.Chat’s desktop and web client. When an image with a caption is sent from the mobile app, the caption should be visible when the same message is viewed on desktop or web. The change updates the image attachment rendering flow so available caption text is displayed near the image while preserving the image `alt` text for accessibility.
+
+**Current Status:**
+The PR has been submitted to the upstream Rocket.Chat repository and is currently awaiting maintainer review. No maintainer feedback has been received yet.
+
+---
+
+## Pull Request Description Summary
+
+### Why this PR was needed
+
+Rocket.Chat users can send images with captions from the mobile app, but those captions were not visibly displayed in the desktop and web client. This created an inconsistent experience across clients because the caption information existed in the attachment metadata or `alt` text, but it was not shown as readable message content in the web UI.
+
+### What this PR changes
+
+This PR updates the image attachment rendering path so caption text is displayed near the image when available. The fix keeps the image `alt` text for accessibility and avoids changing unrelated message or attachment behavior.
+
+### Acceptance Criteria
+
+* Image captions sent from mobile are visible in the desktop and web client.
+* Image `alt` text is still preserved for accessibility.
+* Images without captions continue to render normally.
+* Regular text messages are not affected.
+* Non-image attachments are not affected.
+* No breaking changes are introduced.
+
+### Before / After Evidence
+
+**Before fix:**
+The image appeared in the desktop and web client, but the caption text was not visibly rendered.
+
+**After fix:**
+The image still appears normally, and the caption text is visible near the image in the desktop and web client.
 
 ---
 
@@ -144,6 +196,16 @@ Manual validation steps:
 
 **Manual testing result:**
 The mobile-created image caption is now visible in the desktop and web client, and existing image attachment behavior still works as expected.
+
+---
+
+## Maintainer Feedback Log
+
+| Date         | Feedback / Action                                                               | Student Response                                                      |
+| ------------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| July 1, 2026 | Pull request submitted to the upstream Rocket.Chat repository for Issue #40730. | Added PR summary, current status, and issue reference to this README. |
+| July 1, 2026 | PR was surfaced for review through the pull request submission process.         | Waiting for maintainer review.                                        |
+| July 1, 2026 | No maintainer feedback received yet.                                            | Current status remains: awaiting review.                              |
 
 ---
 
@@ -174,13 +236,17 @@ I considered the following edge cases while working on the fix:
 
 ### Scrum and Slack Participation
 
-I participated in Phase III communication by posting progress updates and checking for support when needed.
+I participated in Phase III and Phase IV communication by posting progress updates, checking for support when needed, preparing the pull request, and documenting the current review status.
+
+### Reviewer / Maintainer Communication
+
+After submitting the pull request, I made the contribution visible for review through the upstream PR process. As of now, no maintainer feedback has been received yet, so the PR status is **awaiting review**.
 
 ### Check-In Form
 
-I submitted the Phase III check-in form and marked:
+I submitted the Phase IV check-in form and marked:
 
-**Phase III Complete**
+**Phase IV Complete**
 
 ---
 
@@ -188,24 +254,18 @@ I submitted the Phase III check-in form and marked:
 
 ### Technical Skills Gained
 
-During Phase III, I gained more experience working inside a large TypeScript open-source codebase. I practiced tracing frontend rendering logic, making a scoped UI fix, and validating that the fix did not affect unrelated message types.
+During this contribution, I gained more experience working inside a large TypeScript open-source codebase. I practiced tracing frontend rendering logic, understanding how image attachments are displayed, and making a scoped UI change without affecting unrelated message types.
+
+I also learned more about the difference between accessibility metadata and visible UI content. In this issue, the caption information appeared to exist through attachment metadata or the image `alt` text, but that did not automatically mean users could see it in the desktop and web client.
 
 ### Open Source Workflow Skills Gained
 
-I practiced working from a fork, committing incrementally on a feature branch, keeping commits focused, documenting progress in a contribution README, and preparing the change for a pull request.
+I practiced the full open-source contribution workflow: selecting an issue, forking the repository, creating a feature branch, reproducing the bug, making a focused fix, preparing a pull request, referencing the issue properly, and documenting the work in a contribution README.
+
+I also learned that submitting a pull request is not the same as having it merged. A PR can still be a valid contribution milestone while it is awaiting maintainer review, as long as the work is clearly documented and ready for review.
 
 ### What I'd Do Differently Next Time
 
 Next time, I would identify the exact test file earlier in the process before starting implementation. That would make it easier to develop the fix and test case together instead of treating testing as a separate step.
 
----
-
-## Resources Used
-
-* Rocket.Chat GitHub repository
-* Rocket.Chat Issue #40730
-* Rocket.Chat setup documentation
-* Existing Rocket.Chat message and attachment rendering code
-* GitHub branch and fork workflow
-* CodePath Phase III Build instructions
-
+I would also prepare before-and-after evidence earlier, such as screenshots or short screen recordings. Since this was a UI issue, visual evidence would make the pull request easier for maintainers and reviewers to evaluate quickly.
