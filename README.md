@@ -1,16 +1,19 @@
-# Contribution 1: Editor Sticky Toolbar in Ocelot-Social
+## Week 5 Check-In Submission
 
-* **Contribution Number:** 1
-* **Student:** Sai Rithwik Kukunuri
+For Week 5, I am submitting the GitHub URL of this Contribution README as my progress journal.
+
+**Submission requirement:** Submit the GitHub URL of the README through the course submit button.
+
+**Deadline:** Monday, July 6, 2026 at 2:59 AM EDT.
+
+This README reflects my current progress for AI301. Since the contribution process can be in Phase I, II, III, or IV depending on the issue cycle, this journal documents where I currently am in the open-source contribution process for my selected issue.
+
+For this check-in, my current issue is:
+
 * **Project:** Ocelot-Social
-* **Repository:** Ocelot-Social-Community/Ocelot-Social
 * **Issue:** [#7127 — Feature: Editor Sticky Toolbar](https://github.com/Ocelot-Social-Community/Ocelot-Social/issues/7127)
-* **Languages / Stack:** TypeScript, JavaScript, Vue
-* **Labels:** good first issue, feature, design, features:post, service: frontend
-* **Fork:** *To be added after fork is created*
-* **Working Branch:** `feature/sticky-editor-toolbar`
-* **Pull Request:** *Not submitted yet*
-* **Status:** Phase I Complete — issue selected and contribution plan drafted
+* **Current Phase:** Phase I Complete / Phase II Starting
+* **Current Status:** Issue selected, README drafted, and local reproduction/setup planned.
 
 ---
 
