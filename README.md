@@ -1,19 +1,24 @@
-# Contribution 1: Mobile image caption alt text not displayed on desktop and web clients
+# Contribution 1: Editor Sticky Toolbar in Ocelot-Social
 
 * **Contribution Number:** 1
 * **Student:** Sai Rithwik Kukunuri
-* **Issue:** Rocket.Chat Issue #40730
-* **Fork:** https://github.com/ZB-ZettaByte/Rocket.Chat
-* **Working Branch:** https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-* **Status:** Phase IV Complete — PR submitted and awaiting review
+* **Project:** Ocelot-Social
+* **Repository:** Ocelot-Social-Community/Ocelot-Social
+* **Issue:** [#7127 — Feature: Editor Sticky Toolbar](https://github.com/Ocelot-Social-Community/Ocelot-Social/issues/7127)
+* **Languages / Stack:** TypeScript, JavaScript, Vue
+* **Labels:** good first issue, feature, design, features:post, service: frontend
+* **Fork:** *To be added after fork is created*
+* **Working Branch:** `feature/sticky-editor-toolbar`
+* **Pull Request:** *Not submitted yet*
+* **Status:** Phase I Complete — issue selected and contribution plan drafted
 
 ---
 
 ## Why I Chose This Issue
 
-I chose this issue because it is a clear user-facing bug in Rocket.Chat’s desktop and web client. When users send an image with a caption from the mobile app, the caption should still be visible when the message is viewed from desktop or web. Fixing this improves consistency across Rocket.Chat clients and makes image messages easier to understand.
+I chose Ocelot-Social issue #7127 because it is a clear user-facing frontend improvement with a realistic scope for an open-source contribution. The issue asks for the editor toolbar to stay visible while a user scrolls through longer content. This matters because when users write a longer post, group description, or comment, the formatting toolbar can scroll out of view. As a result, users may need to scroll back up just to format text or add a link.
 
-This issue also matches my skills and learning goals because Rocket.Chat is a large TypeScript-based open-source project, and the bug is related to frontend message and image attachment rendering. I wanted to learn how a production chat platform handles attachments across mobile and web clients while practicing the full open-source contribution workflow.
+This issue is a good fit for AI301 because it requires me to work inside a real open-source codebase, understand an existing editor component, follow the project’s frontend conventions, and make a focused UI improvement. It also matches my skills because the project uses Vue, JavaScript, and TypeScript, and the issue is labeled as a frontend good first issue.
 
 ---
 
@@ -21,242 +26,254 @@ This issue also matches my skills and learning goals because Rocket.Chat is a la
 
 ### Problem Description
 
-When a user sends an image with a caption from the Rocket.Chat mobile app, the caption text is not visibly displayed in the desktop and web client. According to the issue and my reproduction, the caption appears to be available through the image attachment metadata or `alt` text, but the web client does not render that value as normal visible caption text.
+The current editor toolbar does not remain visible when users scroll down while writing longer content. If the editor content becomes long enough, the toolbar can leave the visible browser area. This creates unnecessary friction because users lose access to formatting controls while they are still actively writing or editing content.
 
 ### Expected Behavior
 
-The caption text should be visible in the desktop and web client when viewing an image that was sent with a caption from the mobile app. The caption should appear near the image in a readable way while still preserving the image `alt` text for accessibility.
+The editor toolbar should remain visible at the top of the browser window or editor area when the user scrolls down. Users should be able to continue formatting content without needing to scroll back up to find the toolbar.
 
 ### Current Behavior
 
-The image appears in the desktop and web client, but the caption text is missing from the visible message UI. The caption is only available indirectly through the image metadata or `alt` attribute instead of being shown as readable message content.
+The toolbar scrolls away with the rest of the editor content. When the user is working on longer text, they may no longer see the toolbar and must scroll upward to access formatting options again.
 
-### Affected Components
+### Affected Areas
 
-The affected area is Rocket.Chat’s web client message rendering flow, especially the components responsible for displaying file and image attachments inside messages.
+The affected area is the Ocelot-Social frontend, especially the editor UI used for content creation and editing.
 
----
+Likely affected pages include:
 
-## Reproduction Process
-
-### Environment Setup
-
-I set up the Rocket.Chat development environment and created a working branch in my fork.
-
-**Working branch:**
-https://github.com/ZB-ZettaByte/Rocket.Chat/tree/fix-issue-40730
-
-Setup notes:
-
-* Cloned my fork of Rocket.Chat.
-* Installed the required project dependencies based on Rocket.Chat setup instructions.
-* Started the development server locally.
-* Verified that Rocket.Chat was accessible in the browser.
-* Created or used a test workspace to reproduce the issue.
-
-### Steps to Reproduce
-
-1. Start the Rocket.Chat development server locally.
-2. Open Rocket.Chat in the browser.
-3. Create or log into a test user account.
-4. Send an image with a caption from a mobile client or mobile-like environment.
-5. Open the same channel from the desktop and web client.
-6. Observe the image message in the desktop and web client.
-7. Inspect the rendered image element using browser DevTools.
-
-**Expected:**
-The caption text should be visible above or below the image in the desktop and web client.
-
-**Actual before fix:**
-The image appeared in the desktop and web client, but the caption text was not visibly rendered. The caption appeared to exist only through image metadata or the image `alt` attribute.
+* Edit post
+* Edit group description
+* Edit comments
+* Other editor-based content areas, if they reuse the same editor component
 
 ---
 
-## Solution Approach
+## Feasibility Checklist
 
-The issue appeared to be in the desktop and web client’s attachment rendering logic. The mobile client sends the caption in a way that is preserved as image metadata or `alt` text, but the web client was not rendering that caption as visible UI text.
+| Criteria                           | Evaluation                                                                          |
+| ---------------------------------- | ----------------------------------------------------------------------------------- |
+| Clear user-facing problem          | Yes. The toolbar becomes unavailable while scrolling through longer editor content. |
+| Scope fits AI301 timeline          | Yes. This appears to be a focused frontend UI behavior change.                      |
+| Good first issue                   | Yes. The issue is labeled as a good first issue.                                    |
+| Project uses familiar technologies | Yes. The stack includes Vue, JavaScript, and TypeScript.                            |
+| Reproduction is possible           | Likely yes. I can reproduce by creating or editing long content and scrolling.      |
+| Testing path exists                | Yes. I can manually test editor behavior and check for existing frontend tests.     |
+| Maintainer interaction likely      | Yes. The issue is open and part of the public Ocelot-Social repository.             |
 
-My approach was to make a minimal frontend change in the image attachment rendering path so that captions are displayed when available, while avoiding duplicate captions for messages that already display the same text elsewhere.
-
----
-
-## Implementation Notes
-
-### Phase I Progress
-
-I selected Rocket.Chat issue #40730, reviewed the problem, checked that it was a suitable open-source contribution, commented on the issue expressing interest, and forked the repository.
-
-### Phase II Progress
-
-I set up the Rocket.Chat development environment, created the `fix-issue-40730` branch, reproduced the missing-caption behavior locally, and identified the likely affected area as the web client’s image attachment rendering flow.
-
-### Phase III Implementation Progress
-
-During Phase III, I worked on implementing the caption rendering fix on the `fix-issue-40730` branch.
-
-**What I changed:**
-
-* Added logic for handling image attachment captions in the desktop and web rendering flow.
-* Made the caption visible near the image instead of leaving it only as image metadata or `alt` text.
-* Preserved the image `alt` text for accessibility.
-* Kept the change focused on image attachment rendering.
-* Checked that images without captions still render normally.
-* Checked that non-image messages are not affected by the change.
-
-### Phase IV Submission Progress
-
-During Phase IV, I prepared the contribution for formal pull request submission.
-
-**What I completed:**
-
-* Submitted the pull request against the upstream Rocket.Chat repository.
-* Referenced the related issue using `Closes #40730`.
-* Wrote a PR description that explains why the fix is needed before describing what changed.
-* Included an acceptance criteria checklist in the PR description.
-* Documented the current PR status in this README.
-* Added a maintainer feedback log.
-* Submitted the Phase IV check-in form and marked **Phase IV Complete**.
+Based on this checklist, I believe this issue is feasible for my first AI301 contribution.
 
 ---
 
-### Pull Request
+## Phase I Progress: Issue Selection
 
-**PR Status:** Open and awaiting review
+During Phase I, I selected Ocelot-Social issue #7127 as my first contribution target.
 
-**Related Issue:** Rocket.Chat Issue #40730
+### What I completed
 
-**Issue Reference in PR:** Closes #40730
+* Reviewed the issue description and labels.
+* Confirmed that the issue is frontend-focused.
+* Confirmed that the issue is labeled as a good first issue.
+* Identified the expected behavior: the editor toolbar should remain visible while scrolling.
+* Identified likely affected areas: post editing, group editing, comments, and shared editor components.
+* Created this Contribution README to document my issue selection and plan.
 
-**PR Summary:**
-This pull request fixes a user-facing caption rendering issue in Rocket.Chat’s desktop and web client. When an image with a caption is sent from the mobile app, the caption should be visible when the same message is viewed on desktop or web. The change updates the image attachment rendering flow so available caption text is displayed near the image while preserving the image `alt` text for accessibility.
+### Why this issue is valuable
 
-**Current Status:**
-The PR has been submitted to the upstream Rocket.Chat repository and is currently awaiting maintainer review. No maintainer feedback has been received yet.
+This change improves the writing experience for users who create longer posts, group descriptions, or comments. Keeping the toolbar visible saves time and reduces unnecessary scrolling. It also makes the editor feel more polished and easier to use.
 
 ---
 
-## Pull Request Description Summary
+## Phase II Plan: Reproduce and Investigate
 
-### Why this PR was needed
+In Phase II, I will set up the Ocelot-Social development environment, reproduce the issue locally, and identify the relevant editor component.
 
-Rocket.Chat users can send images with captions from the mobile app, but those captions were not visibly displayed in the desktop and web client. This created an inconsistent experience across clients because the caption information existed in the attachment metadata or `alt` text, but it was not shown as readable message content in the web UI.
+### Environment Setup Plan
 
-### What this PR changes
+1. Fork the Ocelot-Social repository.
+2. Clone my fork locally.
+3. Create a working branch named `feature/sticky-editor-toolbar`.
+4. Follow the project’s setup instructions.
+5. Install dependencies.
+6. Start the local development environment.
+7. Open the webapp in the browser.
+8. Create or log into a test account if needed.
+9. Navigate to an editor page such as post creation or post editing.
 
-This PR updates the image attachment rendering path so caption text is displayed near the image when available. The fix keeps the image `alt` text for accessibility and avoids changing unrelated message or attachment behavior.
+### Reproduction Steps
 
-### Acceptance Criteria
+1. Start the Ocelot-Social development environment locally.
+2. Open the webapp in the browser.
+3. Go to a page that uses the editor, such as creating or editing a post.
+4. Enter enough text to make the page scroll.
+5. Scroll down while editing the content.
+6. Observe whether the toolbar stays visible or scrolls out of view.
 
-* Image captions sent from mobile are visible in the desktop and web client.
-* Image `alt` text is still preserved for accessibility.
-* Images without captions continue to render normally.
-* Regular text messages are not affected.
-* Non-image attachments are not affected.
-* No breaking changes are introduced.
+### Expected Result
 
-### Before / After Evidence
+The toolbar should remain visible while scrolling so that formatting controls are always accessible.
 
-**Before fix:**
-The image appeared in the desktop and web client, but the caption text was not visibly rendered.
+### Actual Result Before Fix
 
-**After fix:**
-The image still appears normally, and the caption text is visible near the image in the desktop and web client.
+The toolbar likely scrolls out of view with the rest of the editor content, forcing the user to scroll back up to access formatting options.
+
+---
+
+## Initial Solution Approach
+
+My initial approach is to make the editor toolbar sticky using the project’s existing frontend structure and styling conventions.
+
+The likely implementation path is:
+
+1. Locate the editor component used for posts, comments, and group descriptions.
+2. Identify the toolbar element inside the editor.
+3. Check whether the toolbar is shared across multiple editor pages.
+4. Apply sticky behavior to the toolbar using existing styling patterns.
+5. Ensure the toolbar does not cover editor content while sticky.
+6. Test the behavior on longer posts and shorter posts.
+7. Check whether the behavior works across the affected pages listed in the issue.
+
+The main goal is to make a minimal, maintainable frontend change rather than adding unnecessary custom behavior.
+
+---
+
+## Engineering Considerations
+
+I will need to be careful about several details while implementing this feature:
+
+* The toolbar should stay visible while scrolling.
+* The toolbar should not overlap or hide the editor content.
+* The sticky behavior should work only where appropriate.
+* The change should not break short editor forms.
+* The toolbar should still look consistent with the existing design.
+* The solution should reuse existing CSS, Vue, and component patterns where possible.
+* The change should work across editor pages if they share the same component.
+* The implementation should avoid hardcoded layout values unless they are already part of the project’s design system.
 
 ---
 
 ## Testing Strategy
 
-### Automated Testing
-
-I reviewed Rocket.Chat’s existing testing patterns around frontend rendering and attachment-related behavior. I focused on making sure the fix targets the image attachment caption rendering path and does not introduce unrelated UI changes.
-
 ### Manual Testing
 
-I manually validated the fix by repeating the original reproduction steps.
+I plan to manually test the feature using the original issue scenario.
 
-Manual validation steps:
+Manual test cases:
 
-1. Started Rocket.Chat locally.
-2. Sent an image with a caption from a mobile client or mobile-like environment.
-3. Opened the same channel from the desktop and web client.
-4. Confirmed that the image displayed correctly.
-5. Confirmed that the caption was visible near the image.
-6. Confirmed that the image still preserved the correct `alt` text.
-7. Confirmed that images without captions still displayed normally.
-8. Confirmed that regular text messages and non-image attachments were not affected.
+1. Create or edit a short post.
+2. Confirm the toolbar still appears normally.
+3. Create or edit a long post.
+4. Scroll down while editing.
+5. Confirm the toolbar remains visible.
+6. Test adding formatting while scrolled down.
+7. Test adding a link while scrolled down.
+8. Check whether the sticky toolbar affects the content layout.
+9. Test the editor in other possible areas, such as group descriptions or comments, if available.
+10. Confirm there are no obvious visual regressions.
 
-**Manual testing result:**
-The mobile-created image caption is now visible in the desktop and web client, and existing image attachment behavior still works as expected.
+### Automated Testing
+
+After identifying the relevant component, I will check whether Ocelot-Social has existing frontend tests for the editor. If there is an appropriate test pattern, I will consider adding or updating a test. If the change is mainly CSS/UI behavior and automated testing is not practical, I will document manual before-and-after evidence clearly in the pull request.
+
+---
+
+## Pull Request Plan
+
+When the implementation is ready, I will open a pull request against the upstream Ocelot-Social repository.
+
+### Planned PR Title
+
+`feat(editor): make toolbar sticky while scrolling`
+
+### Planned PR Description Summary
+
+This PR will make the editor toolbar stay visible while users scroll through longer editor content. The goal is to improve the writing and editing experience for longer posts, group descriptions, comments, and other editor-based content areas.
+
+### Planned Issue Reference
+
+`Closes #7127`
+
+### Planned Acceptance Criteria
+
+* The editor toolbar remains visible while scrolling through long editor content.
+* Users can access formatting controls without scrolling back to the top.
+* Short editor content still displays normally.
+* The toolbar does not cover or block editor content.
+* Existing editor styling remains consistent.
+* The change does not break other editor-based pages.
+* Manual before-and-after testing is documented.
 
 ---
 
 ## Maintainer Feedback Log
 
-| Date         | Feedback / Action                                                               | Student Response                                                      |
-| ------------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| July 1, 2026 | Pull request submitted to the upstream Rocket.Chat repository for Issue #40730. | Added PR summary, current status, and issue reference to this README. |
-| July 1, 2026 | PR was surfaced for review through the pull request submission process.         | Waiting for maintainer review.                                        |
-| July 1, 2026 | No maintainer feedback received yet.                                            | Current status remains: awaiting review.                              |
+| Date         | Feedback / Action                                            | Student Response                                                                   |
+| ------------ | ------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| July 8, 2026 | Selected Ocelot-Social issue #7127 for AI301 Contribution 1. | Created Contribution README and initial implementation plan.                       |
+| July 8, 2026 | Issue reviewed for scope, feasibility, and technical fit.    | Determined that it is a good first frontend issue using Vue/JavaScript/TypeScript. |
+| TBD          | Pull request submitted.                                      | TBD                                                                                |
+| TBD          | Maintainer feedback received.                                | TBD                                                                                |
 
 ---
 
-## Challenges Faced
+## Current Status
 
-One challenge was identifying where the caption was stored versus where it was actually rendered. The caption appeared to be present through the image attachment metadata or `alt` text, but it was not being displayed as visible UI text.
+The issue has been selected and documented for Phase I. My next step is to set up the Ocelot-Social development environment, reproduce the toolbar scrolling behavior, and identify the editor component that controls the toolbar.
 
-To solve this, I traced the image attachment rendering flow and compared how Rocket.Chat handles image attachment fields, message text, and accessibility attributes. I also checked nearby attachment rendering code to keep the fix consistent with the project’s existing frontend patterns.
+Current status:
 
-Another challenge was avoiding duplicate caption rendering. Since some messages may already display text separately from the attachment, I kept the change scoped so the caption is only rendered when it is needed and not already shown elsewhere.
+**Phase I Complete — Issue selected and contribution README drafted.**
 
----
+Next step:
 
-## Engineering Judgment and Edge Cases Considered
-
-I considered the following edge cases while working on the fix:
-
-* Image attachments with no caption should not show an empty caption area.
-* Image attachments with captions should still preserve the `alt` attribute for accessibility.
-* Caption text should not be duplicated if it already appears in the normal message body.
-* Long captions should render using existing Rocket.Chat message styling instead of custom unrelated styling.
-* Non-image attachments should not be affected by this change.
-* Existing desktop-created image messages should continue to render normally.
+**Phase II — Reproduce the issue locally and write a more specific implementation plan.**
 
 ---
 
-## Process and Communication
+## Challenges I Expect
 
-### Scrum and Slack Participation
+One challenge may be finding the exact editor component because the toolbar may be part of a shared editor package or nested frontend component. I will need to trace how posts, comments, and group descriptions use the editor.
 
-I participated in Phase III and Phase IV communication by posting progress updates, checking for support when needed, preparing the pull request, and documenting the current review status.
+Another challenge may be applying sticky behavior without causing layout issues. A toolbar that sticks to the top of the page can accidentally overlap content if spacing is not handled carefully. I will test the behavior with both short and long content to make sure the UI still feels natural.
 
-### Reviewer / Maintainer Communication
-
-After submitting the pull request, I made the contribution visible for review through the upstream PR process. As of now, no maintainer feedback has been received yet, so the PR status is **awaiting review**.
-
-### Check-In Form
-
-I submitted the Phase IV check-in form and marked:
-
-**Phase IV Complete**
+I may also need to check whether the toolbar should stick to the browser window, the editor container, or another layout boundary. I will use the issue description and existing design patterns in the codebase to make that decision.
 
 ---
 
-## Learnings and Reflections
+## AI Tool Usage Plan
 
-### Technical Skills Gained
+I will use AI tools to support my work, but I will remain responsible for every line of code I submit.
 
-During this contribution, I gained more experience working inside a large TypeScript open-source codebase. I practiced tracing frontend rendering logic, understanding how image attachments are displayed, and making a scoped UI change without affecting unrelated message types.
+I may use AI tools to:
 
-I also learned more about the difference between accessibility metadata and visible UI content. In this issue, the caption information appeared to exist through attachment metadata or the image `alt` text, but that did not automatically mean users could see it in the desktop and web client.
+* Understand unfamiliar Vue components.
+* Summarize editor-related files.
+* Compare existing styling patterns.
+* Draft possible test cases.
+* Review my pull request description.
+* Check whether my implementation is consistent with the issue.
 
-### Open Source Workflow Skills Gained
+I will not submit code that I do not understand. Before opening the pull request, I will manually review the final changes, run available checks, and confirm that the behavior matches the issue requirements.
 
-I practiced the full open-source contribution workflow: selecting an issue, forking the repository, creating a feature branch, reproducing the bug, making a focused fix, preparing a pull request, referencing the issue properly, and documenting the work in a contribution README.
+---
 
-I also learned that submitting a pull request is not the same as having it merged. A PR can still be a valid contribution milestone while it is awaiting maintainer review, as long as the work is clearly documented and ready for review.
+## Learnings and Reflection
 
-### What I'd Do Differently Next Time
+### What I expect to learn
 
-Next time, I would identify the exact test file earlier in the process before starting implementation. That would make it easier to develop the fix and test case together instead of treating testing as a separate step.
+Through this contribution, I expect to learn how a real open-source Vue application organizes editor components, styling, and frontend behavior. I also expect to practice reading unfamiliar code, making a small but meaningful UI change, and communicating my work clearly in a pull request.
 
-I would also prepare before-and-after evidence earlier, such as screenshots or short screen recordings. Since this was a UI issue, visual evidence would make the pull request easier for maintainers and reviewers to evaluate quickly.
+### Why this contribution matters
+
+This contribution matters because it improves the usability of the editor. Users writing longer content should not have to interrupt their writing flow just to scroll back to the toolbar. A sticky toolbar is a small improvement, but it can make the editor feel much smoother and more professional.
+
+### Portfolio Value
+
+This contribution will show that I can:
+
+* Select a feasible open-source issue.
+* Understand a real frontend codebase.
+* Improve a user-facing feature.
+* Work with Vue, JavaScript, TypeScript, and project-specific conventions.
+* Document my process professionally.
+* Prepare a pull request for maintainer review.
